@@ -17,8 +17,13 @@ public class WatchService extends Service {
     }
     private void enableDataAsRoot() {
         Process p = null;
-        try { p = Runtime.getRuntime().exec("su"); DataOutputStream out = new DataOutputStream(p.getOutputStream());
-            out.writeBytes("svc data enable\\n"); out.writeBytes("exit\\n"); out.flush(); p.waitFor();
+        try {
+            p = Runtime.getRuntime().exec("su");
+            DataOutputStream out = new DataOutputStream(p.getOutputStream());
+            out.writeBytes("svc data enable\n");
+            out.writeBytes("exit\n");
+            out.flush();
+            p.waitFor();
         } catch (Exception ignored) { } finally { if (p != null) p.destroy(); }
     }
     @Override public void onDestroy() { handler.removeCallbacks(checker); super.onDestroy(); }
